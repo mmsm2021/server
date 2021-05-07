@@ -92,6 +92,8 @@ services:
         container_name: mongo-express
         depends_on:
             - mongo
+        links:
+            - mongo
         env_file:
             - mongodb.env
         networks:
