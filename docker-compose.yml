@@ -80,6 +80,8 @@ services:
             - ./database/mongo:/data/db
         env_file:
             - mongodb.env
+        networks:
+            - database
         logging:
             driver: "json-file"
             options:
@@ -98,6 +100,7 @@ services:
             - mongodb.env
         networks:
             - proxy
+            - database
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
@@ -114,4 +117,6 @@ services:
 
 networks:
     proxy:
+        external: true
+    database:
         external: true

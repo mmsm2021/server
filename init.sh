@@ -13,3 +13,4 @@ if [ ! -f "$SCRIPTPATH/src/traefik-data/acme-staging.json" ]; then
 fi
 
 docker network create proxy
+docker network create database
