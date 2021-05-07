@@ -1,0 +1,19 @@
+http:
+    middlewares:
+        secureHeaders:
+            headers:
+                sslRedirect: true
+                forceSTSHeader: true
+                stsIncludeSubdomains: true
+                stsPreload: true
+                stsSeconds: 31536000
+
+        user-auth:
+            basicAuth:
+                users:
+                    - "sicet7:$apr1$Q38fy2jN$olqsiWvwLd6fRI631yECY0"
+
+tls:
+    options:
+        default:
+            minVersion: VersionTLS12

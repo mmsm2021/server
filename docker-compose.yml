@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+
+    # region Core
+
+    traefik:
+        image: traefik:latest
+        container_name: traefik
+        restart: unless-stopped
+        networks:
+            - proxy
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./src/traefik-data/traefik.yml:/traefik.yml:ro
+            - ./src/traefik-data/acme-staging.json:/acme-staging.json
+            - ./src/traefik-data/acme-prod.json:/acme-prod.json
+            - ./src/traefik-data/configurations:/configurations
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+            - "traefik.http.routers.traefik-secure.rule=Host(`traefik.sicet7.com`)"
+            - "traefik.http.routers.traefik-secure.service=api@internal"
+            - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
+        env_file:
+            -   'cloudflare.env'
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+
+    portainer:
+        image: portainer/portainer-ce:latest
+        container_name: portainer
+        restart: unless-stopped
+        networks:
+            - proxy
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./src/portainer-data:/data
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.portainer-secure.entrypoints=websecure"
+            - "traefik.http.routers.portainer-secure.rule=Host(`portainer.sicet7.com`)"
+            - "traefik.http.routers.portainer-secure.service=portainer"
+            - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+
+    ofelia:
+        image: mcuadros/ofelia:latest
+        container_name: ofelia
+        restart: unless-stopped
+        command: daemon --docker
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            - proxy
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+
+    # endregion
+
+networks:
+    proxy:
+        external: true

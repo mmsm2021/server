@@ -1,0 +1,7 @@
+.idea/
+src/portainer-data
+cloudflare.env
+src/traefik-data/acme-staging.json
+src/traefik-data/acme-prod.json
+backups/
+rclone.conf
