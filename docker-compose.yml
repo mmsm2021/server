@@ -107,6 +107,7 @@ services:
             - "traefik.http.routers.mongo-secure.entrypoints=websecure"
             - "traefik.http.routers.mongo-secure.rule=Host(`mongo.randomphp.com`)"
             - "traefik.http.routers.mongo-secure.middlewares=user-auth@file"
+            - "traefik.port=8081"
         logging:
             driver: "json-file"
             options:
