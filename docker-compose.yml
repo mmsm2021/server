@@ -24,7 +24,7 @@ services:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.traefik-secure.entrypoints=websecure"
-            - "traefik.http.routers.traefik-secure.rule=Host(`traefik.sicet7.com`)"
+            - "traefik.http.routers.traefik-secure.rule=Host(`traefik.randomphp.com`)"
             - "traefik.http.routers.traefik-secure.service=api@internal"
             - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
         env_file:
@@ -49,7 +49,7 @@ services:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.portainer-secure.entrypoints=websecure"
-            - "traefik.http.routers.portainer-secure.rule=Host(`portainer.sicet7.com`)"
+            - "traefik.http.routers.portainer-secure.rule=Host(`portainer.randomphp.com`)"
             - "traefik.http.routers.portainer-secure.service=portainer"
             - "traefik.http.services.portainer.loadbalancer.server.port=9000"
         logging:
@@ -67,6 +67,41 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock:ro
         networks:
             - proxy
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    mongo:
+        image: mongo:latest
+        restart: always
+        container_name: mongo
+        volumes:
+            - ./database/mongo:/data/db
+        env_file:
+            - mongodb.env
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+
+    mongo-express:
+        image: mongo-express:latest
+        restart: unless-stopped
+        container_name: mongo-express
+        depends_on:
+            - mongo
+        env_file:
+            - mongodb.env
+        networks:
+            - proxy
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.mongo-secure.entrypoints=websecure"
+            - "traefik.http.routers.mongo-secure.rule=Host(`mongo.randomphp.com`)"
+            - "traefik.http.routers.mongo-secure.middlewares=user-auth@file"
         logging:
             driver: "json-file"
             options:
