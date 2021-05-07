@@ -44,7 +44,7 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
-            - ./src/portainer-data:/data
+            - ./data/portainer:/data
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
@@ -57,7 +57,27 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-
+    registry:
+        image: registry:2
+        container_name: registry
+        restart: unless-stopped
+        networks:
+            - proxy
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./data/registry:/var/lib/registry
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.registry-secure.entrypoints=websecure"
+            - "traefik.http.routers.registry-secure.rule=Host(`registry.randomphp.com`)"
+            - "traefik.http.routers.registry-secure.middlewares=user-auth@file"
+            - "traefik.port=5000"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
     #ofelia:
     #    image: mcuadros/ofelia:latest
     #    container_name: ofelia
@@ -77,7 +97,7 @@ services:
         restart: always
         container_name: mongo
         volumes:
-            - ./database/mongo:/data/db
+            - ./data/mongo:/data/db
         env_file:
             - mongodb.env
         networks:

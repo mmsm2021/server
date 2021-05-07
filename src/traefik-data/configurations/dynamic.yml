@@ -13,6 +13,7 @@ http:
                 users:
                     - "sicet7:$apr1$Q38fy2jN$olqsiWvwLd6fRI631yECY0"
                     - "nin_leviathan:$apr1$f3uA4oTI$Bam6stj2wbwXMoSDDxfLR1"
+                    - "mmsm:$apr1$.ZSM5WRN$qYFsRj3CwTYYX96d5ZvGY1"
 
 tls:
     options:
