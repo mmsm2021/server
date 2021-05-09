@@ -15,7 +15,7 @@ entryPoints:
             middlewares:
                 - secureHeaders@file
             tls:
-                certResolver: letsencrypt-staging
+                certResolver: letsencrypt-prod
 
     mc-tcp:
         address: ":25565"
