@@ -28,17 +28,17 @@ providers:
         filename: /configurations/dynamic.yml
 
 certificatesResolvers:
-    letsencrypt-staging:
-        acme:
-            caServer: 'https://acme-staging-v02.api.letsencrypt.org/directory'
-            email: 'ssl@sicet7.com'
-            storage: 'acme-staging.json'
-            keyType: 'RSA4096'
-            dnsChallenge:
-                provider: cloudflare
-                resolvers:
-                    - "1.1.1.1:53"
-                    - "1.0.0.1:53"
+    #letsencrypt-staging:
+    #    acme:
+    #        caServer: 'https://acme-staging-v02.api.letsencrypt.org/directory'
+    #        email: 'ssl@sicet7.com'
+    #        storage: 'acme-staging.json'
+    #        keyType: 'RSA4096'
+    #        dnsChallenge:
+    #            provider: cloudflare
+    #            resolvers:
+    #                - "1.1.1.1:53"
+    #                - "1.0.0.1:53"
     letsencrypt-prod:
         acme:
             caServer: 'https://acme-v02.api.letsencrypt.org/directory'
