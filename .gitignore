@@ -6,3 +6,5 @@ config/traefik/acme-prod.json
 backups/
 data/
 rclone.conf
+config/watchtower/config.json
+github-runner.env
