@@ -120,8 +120,8 @@ services:
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
             - "ofelia.enabled=true"
-            - "ofelia.job-exec.vanilla-save.schedule=@every 60s"
-            - "ofelia.job-exec.vanilla-save.command=php /var/www/html/schedule.php"
+            - "ofelia.job-exec.cron-tick.schedule=@every 60s"
+            - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
         depends_on:
             - traefik
             - registry
