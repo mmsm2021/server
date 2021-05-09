@@ -1,0 +1,7 @@
+{
+    "auths": {
+        "<REGISTRY_NAME>": {
+            "auth": "XXXXXXX"
+        }
+    }
+}

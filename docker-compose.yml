@@ -87,21 +87,46 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-
-    #ofelia:
-    #    image: mcuadros/ofelia:latest
-    #    container_name: ofelia
-    #    restart: unless-stopped
-    #    command: daemon --docker
-    #    volumes:
-    #        - /var/run/docker.sock:/var/run/docker.sock:ro
-    #    networks:
-    #        - proxy
-    #    logging:
-    #        driver: "json-file"
-    #        options:
-    #            max-size: "30m"
-    #            max-file: "3"
+    watchtower:
+        image: containrrr/watchtower
+        container_name: watchtower
+        restart: unless-stopped
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./config/watchtower/config.json:/config.json
+        environment:
+            WATCHTOWER_LABEL_ENABLE: true
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    ofelia:
+        image: mcuadros/ofelia:latest
+        container_name: ofelia
+        restart: unless-stopped
+        command: daemon --docker
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    cron:
+        image: registry.randomphp.com/mmsm/cron:latest
+        container_name: cron
+        restart: unless-stopped
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "ofelia.enabled=true"
+            - "ofelia.job-exec.vanilla-save.schedule=@every 60s"
+            - "ofelia.job-exec.vanilla-save.command=php /var/www/html/schedule.php"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
     mongo:
         image: mongo:latest
         restart: always
