@@ -4,8 +4,6 @@ services:
         image: portainer/portainer-ce:latest
         container_name: portainer
         restart: unless-stopped
-        depends_on:
-            - traefik
         networks:
             - proxy
         volumes:
@@ -33,8 +31,6 @@ services:
             - "ofelia.enabled=true"
             - "ofelia.job-exec.cron-tick.schedule=@every 60s"
             - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
-        depends_on:
-            - registry
         logging:
             driver: "json-file"
             options:
@@ -44,11 +40,6 @@ services:
         image: mongo-express:latest
         restart: unless-stopped
         container_name: mongo-express
-        depends_on:
-            - mongo
-            - traefik
-        links:
-            - mongo
         volumes:
             - /etc/localtime:/etc/localtime:ro
         env_file:
