@@ -73,6 +73,21 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
+    github-runner:
+        image: myoung34/github-runner:latest
+        container_name: github-runner
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /tmp/github-runner-mmsm2021:/tmp/github-runner-mmsm2021
+        env_file:
+            - github-runner.env
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+
     #ofelia:
     #    image: mcuadros/ofelia:latest
     #    container_name: ofelia
