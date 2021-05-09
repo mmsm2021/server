@@ -122,6 +122,9 @@ services:
             - "ofelia.enabled=true"
             - "ofelia.job-exec.vanilla-save.schedule=@every 60s"
             - "ofelia.job-exec.vanilla-save.command=php /var/www/html/schedule.php"
+        depends_on:
+            - traefik
+            - registry
         logging:
             driver: "json-file"
             options:
