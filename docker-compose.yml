@@ -95,7 +95,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - ./config/watchtower/config.json:/config.json
         environment:
-            WATCHTOWER_LABEL_ENABLE: true
+            WATCHTOWER_LABEL_ENABLE: "true"
         logging:
             driver: "json-file"
             options:
