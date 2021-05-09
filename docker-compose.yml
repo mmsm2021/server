@@ -1,9 +1,5 @@
 version: "3.8"
-
 services:
-
-    # region Core
-
     traefik:
         image: traefik:latest
         container_name: traefik
@@ -16,10 +12,10 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
-            - ./src/traefik-data/traefik.yml:/traefik.yml:ro
-            - ./src/traefik-data/acme-staging.json:/acme-staging.json
-            - ./src/traefik-data/acme-prod.json:/acme-prod.json
-            - ./src/traefik-data/configurations:/configurations
+            - ./config/traefik/traefik.yml:/traefik.yml:ro
+            - ./config/traefik/acme-staging.json:/acme-staging.json
+            - ./config/traefik/acme-prod.json:/acme-prod.json
+            - ./config/traefik/configurations:/configurations
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
@@ -34,7 +30,6 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-
     portainer:
         image: portainer/portainer-ce:latest
         container_name: portainer
@@ -97,6 +92,7 @@ services:
         restart: always
         container_name: mongo
         volumes:
+            - /etc/localtime:/etc/localtime:ro
             - ./data/mongo:/data/db
         env_file:
             - mongodb.env
@@ -107,7 +103,6 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-
     mongo-express:
         image: mongo-express:latest
         restart: unless-stopped
@@ -116,6 +111,8 @@ services:
             - mongo
         links:
             - mongo
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
         env_file:
             - mongodb.env
         networks:
@@ -133,9 +130,6 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-
-    # endregion
-
 networks:
     proxy:
         external: true
