@@ -145,6 +145,8 @@ services:
             - "ofelia.enabled=true"
             - "ofelia.job-exec.cron-tick.schedule=@every 60s"
             - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
+        environment:
+            JWKS_URI: "https://mmsm.eu.auth0.com/.well-known/jwks.json"
         logging:
             driver: "json-file"
             options:
