@@ -134,48 +134,48 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-        cron:
-            image: registry.randomphp.com/mmsm/cron:latest
-            container_name: cron
-            restart: unless-stopped
-            depends_on:
-                - registry
-            labels:
-                - "com.centurylinklabs.watchtower.enable=true"
-                - "ofelia.enabled=true"
-                - "ofelia.job-exec.cron-tick.schedule=@every 60s"
-                - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
-            logging:
-                driver: "json-file"
-                options:
-                    max-size: "30m"
-                    max-file: "3"
-        mongo-express:
-            image: mongo-express:latest
-            restart: unless-stopped
-            container_name: mongo-express
-            depends_on:
-                - traefik
-                - mongo
-            volumes:
-                - /etc/localtime:/etc/localtime:ro
-            env_file:
-                - mongodb.env
-            networks:
-                - proxy
-                - database
-            labels:
-                - "traefik.enable=true"
-                - "traefik.docker.network=proxy"
-                - "traefik.http.routers.mongo-secure.entrypoints=websecure"
-                - "traefik.http.routers.mongo-secure.rule=Host(`mongo.randomphp.com`)"
-                - "traefik.http.routers.mongo-secure.middlewares=user-auth@file"
-                - "traefik.port=8081"
-            logging:
-                driver: "json-file"
-                options:
-                    max-size: "30m"
-                    max-file: "3"
+    cron:
+        image: registry.randomphp.com/mmsm/cron:latest
+        container_name: cron
+        restart: unless-stopped
+        depends_on:
+            - registry
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "ofelia.enabled=true"
+            - "ofelia.job-exec.cron-tick.schedule=@every 60s"
+            - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    mongo-express:
+        image: mongo-express:latest
+        restart: unless-stopped
+        container_name: mongo-express
+        depends_on:
+            - traefik
+            - mongo
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        env_file:
+            - mongodb.env
+        networks:
+            - proxy
+            - database
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.mongo-secure.entrypoints=websecure"
+            - "traefik.http.routers.mongo-secure.rule=Host(`mongo.randomphp.com`)"
+            - "traefik.http.routers.mongo-secure.middlewares=user-auth@file"
+            - "traefik.port=8081"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
 networks:
     proxy:
         external: true
