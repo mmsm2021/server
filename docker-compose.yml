@@ -147,6 +147,8 @@ services:
             - "ofelia.job-exec.cron-tick.command=php /var/www/html/scheduler.php"
         environment:
             JWKS_URI: "https://mmsm.eu.auth0.com/.well-known/jwks.json"
+        volumes:
+            - ./data/keys:/keys
         logging:
             driver: "json-file"
             options:
