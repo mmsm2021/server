@@ -167,6 +167,7 @@ services:
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
             - "traefik.http.routers.react-frontend-secure.rule=Host(`frandine.randomphp.com`)"
+            - "traefik.http.services.react-frontend-secure.loadbalancer.server.port=5000"
         networks:
             - proxy
         logging:
@@ -194,7 +195,7 @@ services:
             - "traefik.http.routers.mongo-secure.entrypoints=websecure"
             - "traefik.http.routers.mongo-secure.rule=Host(`mongo.randomphp.com`)"
             - "traefik.http.routers.mongo-secure.middlewares=user-auth@file"
-            - "traefik.port=8081"
+            - "traefik.http.services.mongo-secure.loadbalancer.server.port=8081"
         logging:
             driver: "json-file"
             options:
