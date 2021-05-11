@@ -154,9 +154,9 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-    frontend:
+    react-frontend:
         image: registry.randomphp.com/mmsm/frontend:latest
-        container_name: frontend
+        container_name: react-frontend
         restart: unless-stopped
         depends_on:
             - traefik
@@ -165,8 +165,8 @@ services:
             - "com.centurylinklabs.watchtower.enable=true"
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
-            - "traefik.http.routers.frontend-secure.entrypoints=websecure"
-            - "traefik.http.routers.frontend-secure.rule=Host(`frandine.randomphp.com`)"
+            - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
+            - "traefik.http.routers.react-frontend-secure.rule=Host(`frandine.randomphp.com`)"
         networks:
             - proxy
         logging:
