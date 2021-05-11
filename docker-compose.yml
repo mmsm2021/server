@@ -159,6 +159,7 @@ services:
         container_name: frontend
         restart: unless-stopped
         depends_on:
+            - traefik
             - registry
         labels:
             - "com.centurylinklabs.watchtower.enable=true"
