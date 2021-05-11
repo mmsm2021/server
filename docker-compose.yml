@@ -154,6 +154,28 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
+    frontend:
+        image: registry.randomphp.com/mmsm/frontend:latest
+        container_name: frontend
+        restart: unless-stopped
+        depends_on:
+            - registry
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.frontend-secure.entrypoints=websecure"
+            - "traefik.http.routers.frontend-secure.rule=Host(`frandine.randomphp.com`)"
+            - "traefik.port=3000"
+        environment:
+            PORT: 3000
+        networks:
+            - proxy
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
     mongo-express:
         image: mongo-express:latest
         restart: unless-stopped
