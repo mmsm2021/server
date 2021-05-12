@@ -96,7 +96,7 @@ services:
                 max-file: "3"
     mongo:
         image: mongo:latest
-        restart: always
+        restart: unless-stopped
         container_name: mongo
         volumes:
             - /etc/localtime:/etc/localtime:ro
@@ -105,6 +105,48 @@ services:
             - mongodb.env
         networks:
             - database
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    postgres:
+        image: postgres:13.2-alpine
+        restart: unless-stopped
+        container_name: postgres
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+            - ./data/postgres:/var/lib/postgresql/data
+        env_file:
+            - postgres.env
+        networks:
+            - database
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    strapi:
+        image: strapi/strapi
+        restart: unless-stopped
+        container_name: strapi
+        networks:
+            - proxy
+            - database
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./data/strapi:/srv/app
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
+            - "traefik.http.routers.react-frontend-secure.rule=Host(`cms.randomphp.com`)"
+            - "traefik.http.services.react-frontend-secure.loadbalancer.server.port=3000"
+        depends_on:
+            - postgres
+        env_file:
+            - strapi.env
         logging:
             driver: "json-file"
             options:
