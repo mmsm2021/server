@@ -140,9 +140,9 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
-            - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
-            - "traefik.http.routers.react-frontend-secure.rule=Host(`cms.randomphp.com`)"
-            - "traefik.http.services.react-frontend-secure.loadbalancer.server.port=3000"
+            - "traefik.http.routers.strapi-secure.entrypoints=websecure"
+            - "traefik.http.routers.strapi-secure.rule=Host(`cms.randomphp.com`)"
+            - "traefik.http.services.strapi-secure.loadbalancer.server.port=3000"
         depends_on:
             - postgres
         env_file:
