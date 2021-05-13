@@ -7,6 +7,9 @@ http:
                 stsIncludeSubdomains: true
                 stsPreload: true
                 stsSeconds: 31536000
+                accessControlAllowCredentials: true
+                accessControlAllowHeaders:
+                    - *
                 accessControlAllowMethods:
                     - GET
                     - POST
