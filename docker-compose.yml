@@ -136,7 +136,6 @@ services:
             - database
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - ./data/strapi:/srv/app
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
