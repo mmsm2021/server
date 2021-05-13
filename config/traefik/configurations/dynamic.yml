@@ -7,9 +7,10 @@ http:
                 stsIncludeSubdomains: true
                 stsPreload: true
                 stsSeconds: 31536000
+        corsHeaders:
+            headers:
                 accessControlAllowCredentials: true
-                accessControlAllowHeaders:
-                    - "*"
+                accessControlAllowHeaders: "*"
                 accessControlAllowMethods:
                     - GET
                     - POST
@@ -21,8 +22,8 @@ http:
                     - CONNECT
                     - TRACE
                 accessControlAllowOriginList:
-                    - "randomphp.com"
-                    - "*.randomphp.com"
+                    - https://*.randomphp.com
+                    - https://randomphp.com
                 accessControlMaxAge: 100
                 addVaryHeader: true
         user-auth:
