@@ -243,6 +243,32 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
+    orders:
+        image: registry.randomphp.com/mmsm/orders:latest
+        container_name: orders
+        restart: unless-stopped
+        depends_on:
+            - traefik
+            - registry
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        env_file:
+            - mongodb.env
+        networks:
+            - proxy
+            - database
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.orders-secure.entrypoints=websecure"
+            - "traefik.http.routers.orders-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/orders`)"
+            - "traefik.http.services.orders-secure.loadbalancer.server.port=80"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
 networks:
     proxy:
         external: true
