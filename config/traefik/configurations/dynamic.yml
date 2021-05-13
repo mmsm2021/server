@@ -7,8 +7,6 @@ http:
                 stsIncludeSubdomains: true
                 stsPreload: true
                 stsSeconds: 31536000
-        corsHeaders:
-            headers:
                 accessControlAllowMethods:
                     - GET
                     - POST
@@ -20,24 +18,16 @@ http:
                     - CONNECT
                     - TRACE
                 accessControlAllowOriginList:
-                    - https://randomphp.com
-                    - https://cms.randomphp.com
-                    - https://frandine.randomphp.com
-                    - https://api.randomphp.com
-                    - https://traefik.randomphp.com
-                    - https://registry.randomphp.com
-                    - https://portainer.randomphp.com
-                    - https://mongo.randomphp.com
+                    - "randomphp.com"
+                    - "*.randomphp.com"
                 accessControlMaxAge: 100
                 addVaryHeader: true
-
         user-auth:
             basicAuth:
                 users:
                     - "sicet7:$apr1$Q38fy2jN$olqsiWvwLd6fRI631yECY0"
                     - "nin_leviathan:$apr1$f3uA4oTI$Bam6stj2wbwXMoSDDxfLR1"
                     - "mmsm:$apr1$.ZSM5WRN$qYFsRj3CwTYYX96d5ZvGY1"
-
 tls:
     options:
         default:
