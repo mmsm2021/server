@@ -136,7 +136,9 @@ services:
             - database
         volumes:
             - /etc/localtime:/etc/localtime:ro
+            - ./data/strapi-app:/srv/app
         labels:
+            - "com.centurylinklabs.watchtower.enable=true"
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.strapi-secure.entrypoints=websecure"
