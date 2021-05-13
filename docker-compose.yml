@@ -127,31 +127,31 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
-#    strapi:
-#        image: strapi/strapi
-#        restart: unless-stopped
-#        container_name: strapi
-#        networks:
-#            - proxy
-#            - database
-#        volumes:
-#            - /etc/localtime:/etc/localtime:ro
-#            - ./data/strapi:/srv/app
-#        labels:
-#            - "traefik.enable=true"
-#            - "traefik.docker.network=proxy"
-#            - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
-#            - "traefik.http.routers.react-frontend-secure.rule=Host(`cms.randomphp.com`)"
-#            - "traefik.http.services.react-frontend-secure.loadbalancer.server.port=3000"
-#        depends_on:
-#            - postgres
-#        env_file:
-#            - strapi.env
-#        logging:
-#            driver: "json-file"
-#            options:
-#                max-size: "30m"
-#                max-file: "3"
+    strapi:
+        image: registry.randomphp.com/mmsm/strapi:latest
+        restart: unless-stopped
+        container_name: strapi
+        networks:
+            - proxy
+            - database
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./data/strapi:/srv/app
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.react-frontend-secure.entrypoints=websecure"
+            - "traefik.http.routers.react-frontend-secure.rule=Host(`cms.randomphp.com`)"
+            - "traefik.http.services.react-frontend-secure.loadbalancer.server.port=3000"
+        depends_on:
+            - postgres
+        env_file:
+            - strapi.env
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
     portainer:
         image: portainer/portainer-ce:latest
         container_name: portainer
