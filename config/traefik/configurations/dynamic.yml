@@ -11,19 +11,8 @@ http:
             headers:
                 accessControlAllowCredentials: true
                 accessControlAllowHeaders: "*"
-                accessControlAllowMethods:
-                    - GET
-                    - POST
-                    - PUT
-                    - PATCH
-                    - DELETE
-                    - OPTIONS
-                    - HEAD
-                    - CONNECT
-                    - TRACE
-                accessControlAllowOriginList:
-                    - https://*.randomphp.com
-                    - https://randomphp.com
+                accessControlAllowMethods: GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD,CONNECT,TRACE
+                accessControlAllowOriginList: https://*.randomphp.com,https://randomphp.com
                 accessControlMaxAge: 100
                 addVaryHeader: true
         user-auth:
