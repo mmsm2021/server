@@ -10,7 +10,7 @@ http:
         customHeaders:
             headers:
                 customResponseHeaders:
-                    Access-Control-Allow-Origin: "https://cms.randomphp.com,https://frandine.randomphp.com,https://api.randomphp.com"
+                    Access-Control-Allow-Origin: "https://cms.randomphp.com,https://frandine.randomphp.com,https://api.randomphp.com, http://localhost"
                     Access-Control-Max-Age: "100"
                     Access-Control-Allow-Credentials: "true"
                     Access-Control-Allow-Methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD,CONNECT,TRACE"
