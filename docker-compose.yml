@@ -135,12 +135,14 @@ services:
             - postgres
         networks:
             - database
+            - proxy
         volumes:
             - /etc/localtime:/etc/localtime:ro
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.adminer-secure.entrypoints=websecure"
+            - "traefik.http.routers.adminer-secure.middlewares=user-auth@file"
             - "traefik.http.routers.adminer-secure.rule=Host(`adminer.randomphp.com`)"
             - "traefik.http.services.adminer-secure.loadbalancer.server.port=8080"
         logging:
