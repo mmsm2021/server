@@ -260,7 +260,7 @@ services:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.orders-secure.entrypoints=websecure"
-            - "traefik.http.routers.orders-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/orders`)"
+            - "traefik.http.routers.orders-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/orders`)"
             - "traefik.http.services.orders-secure.loadbalancer.server.port=80"
         logging:
             driver: "json-file"
