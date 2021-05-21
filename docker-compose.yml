@@ -250,6 +250,7 @@ services:
             - registry
         volumes:
             - /etc/localtime:/etc/localtime:ro
+            - ./data/keys:/keys:ro
         env_file:
             - mongodb.env
         networks:
