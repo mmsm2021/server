@@ -298,6 +298,35 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
+    core:
+        image: registry.randomphp.com/mmsm/core:latest
+        container_name: core
+        restart: unless-stopped
+        depends_on:
+            - traefik
+            - registry
+            - postgres
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./data/keys:/keys:ro
+        env_file:
+            - postgres.env
+            - service.env
+        networks:
+            - proxy
+            - database
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.core-secure.entrypoints=websecure"
+            - "traefik.http.routers.core-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/locations`)"
+            - "traefik.http.services.core-secure.loadbalancer.server.port=80"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
 networks:
     proxy:
         external: true
