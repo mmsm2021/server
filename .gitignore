@@ -10,3 +10,4 @@ config/watchtower/config.json
 github-runner.env
 postgres.env
 strapi.env
+service.env
