@@ -11,3 +11,6 @@ github-runner.env
 postgres.env
 strapi.env
 service.env
+orders.env
+core.env
+products.env
