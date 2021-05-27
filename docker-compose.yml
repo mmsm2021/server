@@ -253,6 +253,7 @@ services:
             - ./data/keys:/keys:ro
         env_file:
             - mongodb.env
+            - service.env
         networks:
             - proxy
             - database
@@ -263,6 +264,35 @@ services:
             - "traefik.http.routers.orders-secure.entrypoints=websecure"
             - "traefik.http.routers.orders-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/orders`)"
             - "traefik.http.services.orders-secure.loadbalancer.server.port=80"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
+    products:
+        image: registry.randomphp.com/mmsm/products:latest
+        container_name: products
+        restart: unless-stopped
+        depends_on:
+            - traefik
+            - registry
+            - postgres
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ./data/keys:/keys:ro
+        env_file:
+            - postgres.env
+            - service.env
+        networks:
+            - proxy
+            - database
+        labels:
+            - "com.centurylinklabs.watchtower.enable=true"
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.products-secure.entrypoints=websecure"
+            - "traefik.http.routers.products-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/products`)"
+            - "traefik.http.services.products-secure.loadbalancer.server.port=80"
         logging:
             driver: "json-file"
             options:
