@@ -254,6 +254,7 @@ services:
         env_file:
             - mongodb.env
             - service.env
+            - orders.env
         networks:
             - proxy
             - database
@@ -283,6 +284,7 @@ services:
         env_file:
             - postgres.env
             - service.env
+            - products.env
         networks:
             - proxy
             - database
@@ -312,6 +314,7 @@ services:
         env_file:
             - postgres.env
             - service.env
+            - core.env
         networks:
             - proxy
             - database
