@@ -323,7 +323,7 @@ services:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
             - "traefik.http.routers.core-secure.entrypoints=websecure"
-            - "traefik.http.routers.core-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/locations`)"
+            - "traefik.http.routers.core-secure.rule=Host(`frandine.randomphp.com`) && (PathPrefix(`/api/v1/locations`) || PathPrefix(`/api/v1/countries`))"
             - "traefik.http.services.core-secure.loadbalancer.server.port=80"
         logging:
             driver: "json-file"
