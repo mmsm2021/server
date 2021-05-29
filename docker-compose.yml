@@ -330,6 +330,31 @@ services:
             options:
                 max-size: "30m"
                 max-file: "3"
+    swagger:
+        image: swaggerapi/swagger-ui
+        container_name: swagger
+        restart: unless-stopped
+        depends_on:
+            - orders
+            - products
+            - core
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+        env_file:
+            - swagger.env
+        networks:
+            - proxy
+        labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=proxy"
+            - "traefik.http.routers.core-secure.entrypoints=websecure"
+            - "traefik.http.routers.core-secure.rule=Host(`frandine.randomphp.com`) && PathPrefix(`/api/v1/docs`)"
+            - "traefik.http.services.core-secure.loadbalancer.server.port=8080"
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "30m"
+                max-file: "3"
 networks:
     proxy:
         external: true

@@ -14,3 +14,4 @@ service.env
 orders.env
 core.env
 products.env
+swagger.env
